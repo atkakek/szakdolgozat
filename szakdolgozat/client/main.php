@@ -27,11 +27,7 @@ session_start();
           <a class="nav-link text-light" href="main.php?page=login.php">LogIn</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="main.php?page=favorites.php">
-          <?php
-            print_r($_SESSION['name']);
-          ?>
-          </a>
+          <a class="nav-link text-light" href="main.php?page=logout.php">Log out</a>
         </li>
       </ul>
     </div>
@@ -46,12 +42,13 @@ session_start();
           include("home.php");
       ?>
     </div>
-    <div class="bg-light">
-    <?php
 
-print_r($_SESSION);
-?>
+    <div class="bg-light">
+      <?php
+        print_r($_SESSION);
+      ?>
     </div>
 
+   
 </body>
 </html>

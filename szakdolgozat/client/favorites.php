@@ -15,7 +15,23 @@
 </div>
 
 <script>
-getData('../server/Favorite.php', renderCards);
+    getData('../server/Favorite.php', renderCards);
+    
+    function renderCards(data) {
+        console.log(data);
+        for (const item of data) {
+            document.getElementById('movie-row').innerHTML += 
+            `
+            <div class="card text-bg-dark p-2" style="width: 100%; max-height: 100%">
+            <img src="${data.poster_path}" class="card-img-top" alt="${data.title}">
+            <div class="card-body text-md-start">
+              <h5 class="card-title">${data.title}</h5>
+              <p class="card-text">${data.overview}</p>
+            </div>
+          </div>
+            `;
+        }
+    }
 </script>
 </body>
 </html>
