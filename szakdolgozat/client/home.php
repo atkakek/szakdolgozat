@@ -16,21 +16,30 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Modal title</h5>
+        <h5 class="modal-title" id="modalTitle"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <div class="container-fluid">
+          <div class="row">
+            <div id="poster" class="col-md-6"></div>
+            <div class="col-md-6 ms-auto"  id="movieInfo">
+              <p></p><br>
+            </div>
+          </div>
+          <div class="row" id="popularity" class="col-md-2">
+            <p></p>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn closeButton" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -63,9 +72,13 @@ function showModal(button) {
       console.log(data);
       
       console.log(data.title);
-     
+      const modalPoster = `https://image.tmdb.org/t/p/w300${data.poster_path}`;
       
       document.getElementById('modalTitle').innerHTML = data.title
+      document.getElementById('movieInfo').innerHTML = data.overview
+      document.getElementById('popularity').innerHTML = "Popularity: "+data.popularity
+      document.getElementById('poster').innerHTML = `<img src="${modalPoster}" class="img-fluid" id="poster">`
+
     });
   }
 
@@ -115,8 +128,8 @@ function fetchMovies(selectedGenres = []) {
               <p class="card-text">${overview}</p>
               <div class="like">
                 <button href="#" class="btn m-2" data-bs-toggle="modal" data-bs-target="#myModal" tpye="button" data-movieid="${id}" onclick="showModal(this)">Details</button>
-                <button class="btn m-2" id="likeButton" onclick="addFavorite([${id}, '${title}', '${overview}'])">
-                  <img src="../client/images/heart.png" value="${id}" class="img-fluid w-50">
+                <button class="btn m-2" id="likeButton" onclick="addFavorite([${id}, '${title}', '${overview}', '${imageUrl}'])">
+                  <img src="../client/images/whiteheart.png" value="${id}" class="img-fluid w-50">
                 </button>
               </div>
             </div>
@@ -175,15 +188,29 @@ fetchGenres();
 
       function addFavorite(objString) {
         var obj = eval(objString);
-        console.log(obj[0], obj[1], obj[2]);
-        let overview = obj[2].replaceAll("'", " ");
-        overview = overview.replaceAll("’", " ");
-        overview = overview.replaceAll("'", " ");
+        console.log(obj[0], obj[1], obj[2], obj[3]);
+        let overview = "";
+        let title = "";
+
+        for (let i = 0; i < obj[1].length; i++) {
+          if (obj[1].charAt("'")) {
+            title =  obj[1].replaceAll(/['’`']/g, '');
+
+          }
+        }
+
+        for (let i = 0; i < obj[2].length; i++) {
+          if (obj[2].charAt("'")) {
+           overview =  obj[2].replaceAll(/['’`']/g, '');
+          }
+        }
+
         console.log(overview, "test");
         let myFormData = new FormData();
         myFormData.append('id', obj[0])
-        myFormData.append('title', obj[1])
+        myFormData.append('title', title)
         myFormData.append('overview', overview)
+        myFormData.append('poster_path', obj[3]);
 
         let configObj = {
             method: 'POST',

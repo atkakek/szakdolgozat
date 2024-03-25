@@ -4,12 +4,11 @@ require_once "connectdb.php";
 
 extract($_POST);
 extract($_SESSION);
-$sql ='INSERT INTO likedmovies (userName, movieId, title, overview) VALUES (?,?,?,?)';
-
+$sql ='INSERT INTO likedmovies (userName, movieId, title, overview, poster_path) VALUES (?,?,?,?,?)';
 
 try {
     $stmt = $conn -> prepare($sql);
-    $stmt -> execute([$name, $id, $title, $overview]);
+    $stmt -> execute([$name, $id, $title, $overview, $poster_path]);
     
     echo json_encode(["msg" => "sikeres mentes: "]);
 
@@ -17,7 +16,4 @@ try {
     echo json_encode(["msg" => "sikertelen mentes:   {$e}"]);
 
 }
-
-
-
 ?>

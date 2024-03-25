@@ -21,13 +21,17 @@ session_start();
           <a class="nav-link active text-light" href="main.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="main.php?page=popular.php">Popular</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-light" href="main.php?page=favorites.php">Favorites</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="main.php?page=login.php">LogIn</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="main.php?page=favorites.php">
+          <?php
+            print_r($_SESSION['name']);
+          ?>
+          </a>
         </li>
       </ul>
     </div>

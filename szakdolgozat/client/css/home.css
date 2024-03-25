@@ -3,8 +3,7 @@ body{
     background-repeat: no-repeat;
     overflow-x: hidden;
     margin: 0 auto;
-    padding: 0px;
-    
+    padding: 0px; 
 }
 
 .card{
@@ -39,3 +38,9 @@ body{
     display: flex;
     justify-content: space-between;
 }
+
+.closeButton{
+    background-color: #4b0394;
+    color: white;
+}
+
